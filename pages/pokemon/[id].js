@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
+import React, { useState } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import styles from "../../styles/Details.module.css";
+import { useRouter } from "next/router";
 
 export async function getStaticPaths() {
   const resp = await fetch(
@@ -31,6 +32,16 @@ export async function getStaticProps({ params }) {
 }
 
 export default function Details({ pokemon }) {
+
+
+  const router = useRouter()
+
+  // If the page is not yet generated, this will be displayed
+  // initially until getStaticProps() finishes running
+  if (router.isFallback) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div>
       <Head>
